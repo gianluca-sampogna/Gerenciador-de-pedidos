@@ -1,4 +1,6 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, ReactNode } from 'react';
+import { IAddPedido } from './types';
+
 import {
   doc,
   setDoc,
@@ -8,30 +10,39 @@ import {
 } from 'firebase/firestore';
 import db from '../../firebaseConnection';
 
-type AuthContextType = {
-  auth: boolean;
-  setAuth: React.Dispatch<React.SetStateAction<boolean>>;
-  addPedido: (name: string, faccao: string | null) => Promise<void>;
+type DatabaseContextType = {
+  addPedido: (pedido: IAddPedido) => Promise<void>;
   listaPedidos: () => Promise<DocumentData[]>;
 };
 
-export const DatabaseContext = createContext<AuthContextType>(
-  {} as AuthContextType,
+export const DatabaseContext = createContext<DatabaseContextType>(
+  {} as DatabaseContextType,
 );
 
 export const DatabaseProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [auth, setAuth] = useState<boolean>(false);
-
-  const addPedido = async (
-    name: string,
-    faccao: string | null,
-  ): Promise<void> => {
+  const addPedido = async (pedido: IAddPedido): Promise<void> => {
+    const {
+      name,
+      dt_registro,
+      corte,
+      silk,
+      bordado,
+      sublimacao,
+      costura,
+      faccao,
+    } = pedido;
     const citiesRef = collection(db, 'Pedidos');
     await setDoc(doc(citiesRef, name), {
       Nome: name,
-      faccao: faccao,
+      dt_registro,
+      corte,
+      silk,
+      bordado,
+      sublimacao,
+      costura,
+      faccao,
     });
   };
 
@@ -48,9 +59,7 @@ export const DatabaseProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <DatabaseContext.Provider
-      value={{ auth, setAuth, addPedido, listaPedidos }}
-    >
+    <DatabaseContext.Provider value={{ addPedido, listaPedidos }}>
       {children}
     </DatabaseContext.Provider>
   );
