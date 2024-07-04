@@ -5,10 +5,16 @@ import { doc, setDoc, collection } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
 import { styles } from './style/styles';
 import { CORES } from '@enum/CORES';
+import { useNavigation } from '@react-navigation/native';
+import {
+  NativeStackNavigationProp,
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
 
 import { DatabaseContext } from '@database/index';
 
 export default function Home() {
+  const navigate = useNavigation<NativeStackNavigationProp<any>>();
   const { addPedido, listaPedidos } = useContext(DatabaseContext);
   const [pedidos, setPedidos] = useState<any>(null);
 
@@ -30,7 +36,10 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <Text>App inicial</Text>
-      <Button onPress={handleButton} title="ADICIONAR" />
+      <Button
+        onPress={() => navigate.navigate('CriaPedido')}
+        title="ADICIONAR"
+      />
       <StatusBar style="auto" />
     </View>
   );
