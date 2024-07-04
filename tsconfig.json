@@ -6,7 +6,8 @@
     "paths": {
       "@screens/*": ["src/screens/*"],
       "@src/*": ["src/*"],
-      "@database/*": ["src/context/database/*"]
+      "@database/*": ["src/context/database/*"],
+      "@enum/*": ["src/Enum/*"]
     }
   },
   
