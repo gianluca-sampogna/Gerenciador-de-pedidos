@@ -19,5 +19,9 @@ export default function CriaPedido() {
     addPedido(pedido);
   };
 
-  return <>{numPage == 1 && <NomeCliente />}</>;
+  return (
+    <>
+      {numPage == 1 && <NomeCliente valor={pedido} defineValor={defineValor} />}
+    </>
+  );
 }
