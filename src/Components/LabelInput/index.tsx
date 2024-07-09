@@ -36,6 +36,7 @@ const LabelInput: React.FC<ILabelInput> = ({
           { borderColor: isFocused ? CORES.azul : '#918b87' },
         ]}
       >
+        <Text>Olá</Text>
         <TextInput
           style={styles.input}
           placeholder="Digite aqui"
