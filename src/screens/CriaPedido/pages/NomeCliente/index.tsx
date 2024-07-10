@@ -1,16 +1,24 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { Dispatch, SetStateAction } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import LabelInput from '@src/Components/LabelInput';
+import { TextInput, Tooltip } from 'react-native-paper';
+import { IAddPedido } from '@src/context/database/types';
 
 interface NomeClienteProps {
   defineValor: (novoValor: any) => void;
-  valor: string;
+  avancaPagina: () => void;
+  pedido: IAddPedido;
+  // valor: string;
 }
 
-const NomeCliente: React.FC<NomeClienteProps> = ({ defineValor, valor }) => {
+const NomeCliente: React.FC<NomeClienteProps> = ({
+  defineValor,
+  avancaPagina,
+  pedido,
+}) => {
   return (
-    <View>
+    <View style={styles.container}>
       <View style={{ alignItems: 'center' }}>
         <Text
           style={[styles.textoPrincipal, { fontFamily: 'Poppins_300Light' }]}
@@ -18,13 +26,31 @@ const NomeCliente: React.FC<NomeClienteProps> = ({ defineValor, valor }) => {
           Qual o nome do cliente que deseja cadastrar?
         </Text>
         <View style={{ width: '90%' }}>
-          <LabelInput
+          <TextInput
+            onChangeText={(text) => defineValor({ name: text })}
+            mode="outlined"
             label="Nome"
-            handleChangeText={defineValor}
-            value={valor}
+            placeholder="Digite o nome do cliente"
+            value={pedido.name ? pedido.name : ''}
           />
         </View>
       </View>
+
+      {!!pedido.name && (
+        <View style={styles.footer}>
+          {/* <View style={styles.buttonVoltar}>
+          <Text>VOLTAR</Text>
+        </View> */}
+          <View style={{ width: '40%' }}></View>
+          <TouchableOpacity style={styles.buttonAvancar} onPress={avancaPagina}>
+            <Text
+              style={{ color: 'white', fontFamily: 'Merriweather_700Bold' }}
+            >
+              AVANÇAR
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };

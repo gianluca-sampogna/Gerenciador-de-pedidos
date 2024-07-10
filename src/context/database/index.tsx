@@ -32,6 +32,7 @@ export const DatabaseProvider: React.FC<{ children: ReactNode }> = ({
       sublimacao,
       costura,
       faccao,
+      etapa,
     } = pedido;
     const citiesRef = collection(db, 'Pedidos');
     await setDoc(doc(citiesRef, name), {
@@ -43,6 +44,7 @@ export const DatabaseProvider: React.FC<{ children: ReactNode }> = ({
       sublimacao,
       costura,
       faccao,
+      etapa,
     });
   };
 

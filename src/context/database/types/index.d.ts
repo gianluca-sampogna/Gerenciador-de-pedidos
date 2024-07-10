@@ -7,6 +7,7 @@ interface IAddPedido {
   sublimacao?: string;
   costura?: string;
   faccao?: string | null;
+  etapa?: string;
 }
 
 export { IAddPedido };
