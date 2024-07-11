@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { doc, setDoc, collection } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
 import { styles } from './style/styles';
@@ -10,8 +10,11 @@ import {
   NativeStackNavigationProp,
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
+import { CardPedido } from '../../Components/CardPedido';
 
 import { DatabaseContext } from '@database/index';
+import { IAddPedido } from '@src/context/database/types';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function Home() {
   const navigate = useNavigation<NativeStackNavigationProp<any>>();
@@ -22,25 +25,42 @@ export default function Home() {
     recuperaPedidos();
   }, []);
 
-  const handleButton = () => {
-    addPedido({ name: 'Junin do pedregulho', faccao: 'ademar' });
-  };
-
   const recuperaPedidos = async () => {
     const ped = await listaPedidos();
     setPedidos(ped);
   };
 
-  console.log('pedidos', JSON.stringify(pedidos));
+  const renderizaPedidos = () => {
+    return pedidos?.map((pedido: IAddPedido, index: number) => (
+      <CardPedido key={index} pedido={pedido} />
+    ));
+  };
 
   return (
-    <View style={styles.container}>
-      <Text>App inicial</Text>
-      <Button
-        onPress={() => navigate.navigate('CriaPedido')}
-        title="ADICIONAR"
-      />
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <View style={styles.container}>
+        <Text>App inicial</Text>
+
+        {!pedidos ? (
+          <View>
+            <Text>Carregando</Text>
+          </View>
+        ) : (
+          <View style={{ height: '100%', alignItems: 'center' }}>
+            {renderizaPedidos()}
+          </View>
+        )}
+      </View>
+      <TouchableOpacity
+        style={styles.touchebleBtnAdd}
+        onPressIn={() => navigate.navigate('CriaPedido')}
+      >
+        <View style={styles.btnAdd}>
+          <Text>
+            <Ionicons name="add" size={24} color="black" />
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </>
   );
 }

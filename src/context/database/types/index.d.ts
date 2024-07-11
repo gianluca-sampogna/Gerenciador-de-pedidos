@@ -6,7 +6,7 @@ interface IAddPedido {
   bordado?: string;
   sublimacao?: string;
   costura?: string;
-  faccao?: string | null;
+  faccao?: string;
   etapa?: string;
 }
 

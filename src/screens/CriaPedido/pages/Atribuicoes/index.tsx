@@ -10,6 +10,7 @@ import {
 import { TextInput, Switch, SegmentedButtons } from 'react-native-paper';
 import { styles } from './styles';
 import { IAddPedido } from '@src/context/database/types';
+import { useNavigation } from '@react-navigation/native';
 
 interface IAtribuicoes {
   defineValor: (novoValor: any) => void;
@@ -26,6 +27,7 @@ const Atribuicoes: React.FC<IAtribuicoes> = ({
   pedido,
   handleSubmit,
 }) => {
+  const navigate = useNavigation();
   const [value, setValue] = useState('');
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isSwitchOn1, setIsSwitchOn1] = useState(false);
@@ -190,7 +192,10 @@ const Atribuicoes: React.FC<IAtribuicoes> = ({
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonAvancar}
-              onPress={handleSubmit}
+              onPress={() => {
+                handleSubmit();
+                navigate.goBack();
+              }}
             >
               <Text
                 style={{ color: 'white', fontFamily: 'Merriweather_700Bold' }}

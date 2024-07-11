@@ -55,7 +55,7 @@ export const DatabaseProvider: React.FC<{ children: ReactNode }> = ({
     const dataAtual = getBrazilianDate();
 
     const dataToSend: { [key: string]: string } = {
-      Nome: name,
+      name,
       dt_registro: dt_registro || dataAtual,
     };
 
