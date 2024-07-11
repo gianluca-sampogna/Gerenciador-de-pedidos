@@ -11,6 +11,10 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: 'center',
   },
+  textoSecundario: {
+    fontSize: 20,
+    textAlign: 'center',
+  },
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -41,6 +45,16 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     borderWidth: 0.6,
     // margin: 20,
+  },
+  corpo: {
+    width: '100%',
+  },
+  input: {
+    flexDirection: 'row',
+    width: '100%',
+    marginTop: 20,
+    marginLeft: 10,
+    justifyContent: 'space-evenly',
   },
 });
 

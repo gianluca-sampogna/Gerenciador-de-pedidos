@@ -36,21 +36,22 @@ const NomeCliente: React.FC<NomeClienteProps> = ({
         </View>
       </View>
 
-      {!!pedido.name && (
-        <View style={styles.footer}>
-          {/* <View style={styles.buttonVoltar}>
-          <Text>VOLTAR</Text>
-        </View> */}
-          <View style={{ width: '40%' }}></View>
-          <TouchableOpacity style={styles.buttonAvancar} onPress={avancaPagina}>
-            <Text
-              style={{ color: 'white', fontFamily: 'Merriweather_700Bold' }}
-            >
-              AVANÇAR
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      <View style={styles.footer}>
+        <View style={{ width: '40%' }}></View>
+        <TouchableOpacity
+          style={[
+            styles.buttonAvancar,
+            !pedido.name && { backgroundColor: '#c6c6c6' },
+          ]}
+          onPress={() => {
+            if (pedido.name) avancaPagina();
+          }}
+        >
+          <Text style={{ color: 'white', fontFamily: 'Merriweather_700Bold' }}>
+            AVANÇAR
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

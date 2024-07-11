@@ -54,6 +54,7 @@ export default function CriaPedido() {
           avancaPagina={avancaPagina}
           voltaPagina={voltaPagina}
           pedido={pedido}
+          handleSubmit={handleSubmit}
         />
       )}
     </>

@@ -22,6 +22,22 @@ export const DatabaseContext = createContext<DatabaseContextType>(
 export const DatabaseProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const getBrazilianDate = () => {
+    // Cria um novo objeto Date para obter a data atual
+    const today = new Date();
+
+    // Obtém o dia, mês e ano da data atual
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Janeiro é 0!
+    const year = today.getFullYear();
+
+    // Formata a data no formato brasileiro (dd/mm/yyyy)
+    const brazilianDate = `${day}/${month}/${year}`;
+
+    // Retorna a data formatada
+    return brazilianDate;
+  };
+
   const addPedido = async (pedido: IAddPedido): Promise<void> => {
     const {
       name,
@@ -34,10 +50,16 @@ export const DatabaseProvider: React.FC<{ children: ReactNode }> = ({
       faccao,
       etapa,
     } = pedido;
+
     const citiesRef = collection(db, 'Pedidos');
-    await setDoc(doc(citiesRef, name), {
+    const dataAtual = getBrazilianDate();
+
+    const dataToSend: { [key: string]: string } = {
       Nome: name,
-      dt_registro,
+      dt_registro: dt_registro || dataAtual,
+    };
+
+    const optionalFields = {
       corte,
       silk,
       bordado,
@@ -45,7 +67,15 @@ export const DatabaseProvider: React.FC<{ children: ReactNode }> = ({
       costura,
       faccao,
       etapa,
-    });
+    };
+
+    for (const [key, value] of Object.entries(optionalFields)) {
+      if (value) {
+        dataToSend[key] = value;
+      }
+    }
+
+    await setDoc(doc(citiesRef, name), dataToSend);
   };
 
   const listaPedidos = async (): Promise<DocumentData[]> => {

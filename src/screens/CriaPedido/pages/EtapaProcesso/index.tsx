@@ -33,7 +33,7 @@ const EtapaProcesso: React.FC<IEtapaProcesso> = ({
         </Text>
 
         <View style={styles.sectionsCards}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.card}
             onPress={() => defineValor({ etapa: 'solicitacao' })}
           >
@@ -50,7 +50,7 @@ const EtapaProcesso: React.FC<IEtapaProcesso> = ({
                 source={imagSolicitacao} // Utilize a variável diretamente como source
               />
             </Card>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity
             style={styles.card}
