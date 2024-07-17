@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   buttonAvancar: {
     backgroundColor: CORES.azul,
     height: 60,
-    width: '45%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
 
@@ -41,12 +41,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     marginTop: 20,
-    marginLeft: 10,
-    justifyContent: 'space-evenly',
+    // marginLeft: 10,
+    justifyContent: 'center',
   },
   textoSecundario: {
     fontSize: 20,
     textAlign: 'center',
+  },
+  footer: {
+    margin: 10,
   },
 });
 

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
-import { SegmentedButtons, TextInput, Checkbox } from 'react-native-paper';
+import { SegmentedButtons, TextInput } from 'react-native-paper';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { IAddPedido } from '@src/context/database/types';
+import { CORES } from '@src/Enum/CORES';
 
 // Tipos para os parâmetros das rotas
 type RouteParams = {
@@ -14,153 +15,150 @@ const DetalhaPedido: React.FC = () => {
   const route = useRoute<RouteProp<{ params: RouteParams }, 'params'>>();
   const pedido = route.params?.pedido;
   const [value, setValue] = useState('');
-  const [checked, setChecked] = useState(false);
-  const [checked1, setChecked1] = useState(false);
-  const [checked2, setChecked2] = useState(false);
+  const [objInicial, setObjInicial] = useState<IAddPedido>(pedido);
+  const [objEscrito, setObjEscrito] = useState<IAddPedido>(pedido);
+
+  const defineValor = (novoValor: any) => {
+    setObjEscrito((form) => ({ ...form, ...novoValor }));
+  };
+
+  const salvaObjPedido = async () => {
+    console.log('objEscrito', objEscrito);
+    console.log('objInicial', objInicial);
+  };
 
   console.log(pedido);
 
   return (
     <>
-      <View style={{ alignItems: 'center' }}>
-        <View style={{ width: '100%', marginBottom: 20 }}>
-          <SegmentedButtons
-            theme={{ colors: { primary: 'green' } }}
-            value={pedido.etapa ? pedido.etapa : value}
-            onValueChange={setValue}
-            buttons={[
-              {
-                value: 'corte',
-                label: 'Corte',
-                onPress: () => {}, // Função vazia para não fazer nada ao pressionar
-                disabled: pedido.etapa !== 'corte',
-              },
-              {
-                value: 'distribuicao',
-                label: 'Distribuição',
-                onPress: () => {}, // Função vazia para não fazer nada ao pressionar
-                disabled: pedido.etapa !== 'distribuicao',
-              },
-              {
-                value: 'costura',
-                label: 'Costura',
-                onPress: () => {}, // Função vazia para não fazer nada ao pressionar
-                disabled: pedido.etapa !== 'costura',
-              },
-            ]}
-          />
+      <View style={{ justifyContent: 'space-between', height: '100%' }}>
+        <View style={{ alignItems: 'center' }}>
+          <View style={{ width: '100%', marginBottom: 20 }}>
+            <SegmentedButtons
+              theme={{ colors: { primary: 'green' } }}
+              value={pedido.etapa ? pedido.etapa : value}
+              onValueChange={setValue}
+              buttons={[
+                {
+                  value: 'corte',
+                  label: 'Corte',
+                  onPress: () => {}, // Função vazia para não fazer nada ao pressionar
+                  disabled: pedido.etapa !== 'corte',
+                },
+                {
+                  value: 'distribuicao',
+                  label: 'Distribuição',
+                  onPress: () => {}, // Função vazia para não fazer nada ao pressionar
+                  disabled: pedido.etapa !== 'distribuicao',
+                },
+                {
+                  value: 'costura',
+                  label: 'Costura',
+                  onPress: () => {}, // Função vazia para não fazer nada ao pressionar
+                  disabled: pedido.etapa !== 'costura',
+                },
+              ]}
+            />
+          </View>
+
+          {pedido.etapa === 'corte' && (
+            <View style={styles.corpo}>
+              <View style={styles.input}>
+                <TextInput
+                  onChangeText={(text) => defineValor({ corte: text })}
+                  mode="outlined"
+                  label="Nome do cortador"
+                  placeholder="Digite o nome do cortador"
+                  value={objEscrito.corte ? objEscrito.corte : ''}
+                  style={{ width: '90%' }}
+                />
+              </View>
+            </View>
+          )}
+
+          {pedido.etapa === 'distribuicao' && (
+            <View style={styles.corpo}>
+              <View style={styles.input}>
+                <TextInput
+                  onChangeText={(text) => defineValor({ silk: text })}
+                  mode="outlined"
+                  label="Silk"
+                  placeholder="Digite o nome do silkador"
+                  value={objEscrito.silk ? objEscrito.silk : ''}
+                  style={{ width: '90%' }}
+                />
+              </View>
+              <View style={styles.input}>
+                <TextInput
+                  onChangeText={(text) => defineValor({ bordado: text })}
+                  mode="outlined"
+                  label="Bordado"
+                  placeholder="Digite o nome do bordador"
+                  value={objEscrito.bordado ? objEscrito.bordado : ''}
+                  style={{ width: '90%' }}
+                />
+              </View>
+              <View style={styles.input}>
+                <TextInput
+                  onChangeText={(text) => defineValor({ sublimacao: text })}
+                  mode="outlined"
+                  label="Sublimação"
+                  placeholder="Digite o nome do sublimador"
+                  value={objEscrito.sublimacao ? objEscrito.sublimacao : ''}
+                  style={{ width: '90%' }}
+                />
+              </View>
+            </View>
+          )}
+
+          {pedido.etapa === 'costura' && (
+            <View style={styles.corpo}>
+              <Text
+                style={[
+                  styles.textoSecundario,
+                  { fontFamily: 'Poppins_300Light' },
+                ]}
+              >
+                A costura está com alguma costureira?
+              </Text>
+              <View style={styles.input}>
+                <TextInput
+                  onChangeText={(text) => defineValor({ costura: text })}
+                  mode="outlined"
+                  label="Nome da costureira"
+                  placeholder="Digite o nome da costureira"
+                  value={objEscrito.costura ? objEscrito.costura : ''}
+                  style={{ width: '90%' }}
+                />
+              </View>
+            </View>
+          )}
         </View>
-
-        {pedido.etapa === 'corte' && (
-          <View style={styles.corpo}>
-            <Text
-              style={[
-                styles.textoSecundario,
-                { fontFamily: 'Poppins_300Light' },
-              ]}
+        <View style={styles.footer}>
+          {objEscrito == objInicial ? (
+            <TouchableOpacity
+              onPress={salvaObjPedido}
+              style={[styles.buttonAvancar, { backgroundColor: CORES.azul }]}
             >
-              A costura está sendo cortado?
-            </Text>
-            <View style={styles.input}>
-              <TextInput
-                onChangeText={(text) => defineValor({ corte: text })}
-                mode="outlined"
-                label="Nome do cortador"
-                disabled={!checked}
-                placeholder="Digite o nome do cortador"
-                value={pedido.corte ? pedido.corte : ''}
-                style={{ width: '80%' }}
-              />
-              <Checkbox.Item
-                label="Cortador"
-                status={!checked ? 'checked' : 'unchecked'}
-                onPress={() => setChecked(!checked)}
-              />
-            </View>
-          </View>
-        )}
-
-        {pedido.etapa === 'distribuicao' && (
-          <View style={styles.corpo}>
-            <View style={styles.input}>
-              <TextInput
-                onChangeText={(text) => defineValor({ silk: text })}
-                mode="outlined"
-                label="Silk"
-                disabled={!checked}
-                placeholder="Digite o nome do silkador"
-                value={pedido.silk ? pedido.silk : ''}
-                style={{ width: '80%' }}
-              />
-              <Checkbox.Item
-                label=""
-                status={!checked ? 'checked' : 'unchecked'}
-                onPress={() => setChecked(!checked)}
-              />
-            </View>
-            <View style={styles.input}>
-              <TextInput
-                onChangeText={(text) => defineValor({ bordado: text })}
-                mode="outlined"
-                label="Bordado"
-                disabled={!checked1}
-                placeholder="Digite o nome do bordador"
-                value={pedido.bordado ? pedido.bordado : ''}
-                style={{ width: '80%' }}
-              />
-              <Checkbox.Item
-                label=""
-                status={!checked1 ? 'checked' : 'unchecked'}
-                onPress={() => setChecked1(!checked1)}
-              />
-            </View>
-            <View style={styles.input}>
-              <TextInput
-                onChangeText={(text) => defineValor({ sublimacao: text })}
-                mode="outlined"
-                label="Sublimação"
-                disabled={!checked2}
-                placeholder="Digite o nome do sublimador"
-                value={pedido.sublimacao ? pedido.sublimacao : ''}
-                style={{ width: '80%' }}
-              />
-              <Checkbox.Item
-                label=""
-                status={!checked2 ? 'checked' : 'unchecked'}
-                onPress={() => setChecked2(!checked2)}
-              />
-            </View>
-          </View>
-        )}
-
-        {pedido.etapa === 'costura' && (
-          <View style={styles.corpo}>
-            <Text
-              style={[
-                styles.textoSecundario,
-                { fontFamily: 'Poppins_300Light' },
-              ]}
+              <Text
+                style={{ color: 'white', fontFamily: 'Merriweather_700Bold' }}
+              >
+                AVANÇAR ETAPA
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[styles.buttonAvancar, { backgroundColor: CORES.azul }]}
+              onPress={salvaObjPedido}
             >
-              A costura está com alguma costureira?
-            </Text>
-            <View style={styles.input}>
-              <TextInput
-                onChangeText={(text) => defineValor({ costura: text })}
-                mode="outlined"
-                label="Nome da costureira"
-                disabled={!checked}
-                placeholder="Digite o nome da costureira"
-                value={pedido.costura ? pedido.costura : ''}
-                style={{ width: '80%' }}
-              />
-              <Checkbox.Item
-                label="Costureira"
-                status={!checked ? 'checked' : 'unchecked'}
-                onPress={() => setChecked(!checked)}
-              />
-            </View>
-          </View>
-        )}
+              <Text
+                style={{ color: 'white', fontFamily: 'Merriweather_700Bold' }}
+              >
+                SALVAR
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </>
   );
