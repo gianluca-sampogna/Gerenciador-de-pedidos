@@ -23,6 +23,26 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 60,
   },
+  textoName: {
+    fontWeight: '600',
+    fontFamily: 'Merriweather_900Black',
+  },
+  textsNameEtapa: {
+    height: '100%',
+    justifyContent: 'space-evenly',
+  },
+  data: {
+    width: '50%',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+  touchableOpacity: {
+    width: '100%',
+    height: 60,
+    marginVertical: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export { styles };

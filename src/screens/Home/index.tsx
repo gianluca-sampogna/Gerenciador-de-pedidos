@@ -39,8 +39,6 @@ export default function Home() {
   return (
     <>
       <View style={styles.container}>
-        <Text>App inicial</Text>
-
         {!pedidos ? (
           <View>
             <Text>Carregando</Text>

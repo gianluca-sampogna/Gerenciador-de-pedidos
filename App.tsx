@@ -15,6 +15,7 @@ import {
 import {
   Merriweather_300Light,
   Merriweather_700Bold,
+  Merriweather_900Black,
 } from '@expo-google-fonts/merriweather';
 import { CORES } from '@src/Enum/CORES';
 
@@ -24,6 +25,7 @@ export default function App() {
     Poppins_300Light,
     Merriweather_300Light,
     Merriweather_700Bold,
+    Merriweather_900Black,
   });
 
   if (!fontLoaded) {
@@ -36,7 +38,9 @@ export default function App() {
       ...DefaultTheme.colors,
       primary: CORES.azul,
       backgroundColor: CORES.azul,
-      // secondary: 'yellow',
+      secondary: 'yellow',
+      primaryContainer: 'red',
+      
     },
   };
 
