@@ -1,6 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import { useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { useContext, useEffect, useState, useCallback } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  ScrollView,
+  RefreshControl,
+} from 'react-native';
 import { doc, setDoc, collection } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
 import { styles } from './style/styles';
@@ -20,6 +28,7 @@ export default function Home() {
   const navigate = useNavigation<NativeStackNavigationProp<any>>();
   const { addPedido, listaPedidos } = useContext(DatabaseContext);
   const [pedidos, setPedidos] = useState<any>(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     recuperaPedidos();
@@ -36,9 +45,25 @@ export default function Home() {
     ));
   };
 
+  const onRefresh = useCallback(() => {
+    recuperaPedidos();
+    setRefreshing(true);
+    // Simula uma chamada de rede, você deve substituir por suas ações de atualização
+    setTimeout(() => {
+      setRefreshing(false);
+      renderizaPedidos();
+    }, 2000);
+  }, []);
+
   return (
     <>
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{ flexGrow: 1 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         {!pedidos ? (
           <View>
             <Text>Carregando</Text>
@@ -48,7 +73,7 @@ export default function Home() {
             {renderizaPedidos()}
           </View>
         )}
-      </View>
+      </ScrollView>
       <TouchableOpacity
         style={styles.touchebleBtnAdd}
         onPressIn={() => navigate.navigate('CriaPedido')}

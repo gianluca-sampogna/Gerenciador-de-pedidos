@@ -29,8 +29,6 @@ export default function CriaPedido() {
     addPedido(pedido);
   };
 
-  console.log('pedido', pedido);
-
   return (
     <>
       {numPage == 1 && (

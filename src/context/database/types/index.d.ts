@@ -8,6 +8,7 @@ interface IAddPedido {
   costura?: string;
   faccao?: string;
   etapa?: string;
+  dt_finalizado: string;
 }
 
 export { IAddPedido };
