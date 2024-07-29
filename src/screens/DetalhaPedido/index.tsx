@@ -66,13 +66,16 @@ const DetalhaPedido: React.FC = () => {
             <View style={styles.history}>
               <View style={styles.bolinha} />
               <View style={styles.linhaVertical} />
-              <Text style={styles.textoSecundario}>{pedido.dt_registro} </Text>
+              <Text style={styles.textoSecundario}> {pedido.dt_registro} </Text>
             </View>
             {!!pedido.corte && (
               <View style={styles.history}>
                 <View style={styles.bolinha} />
                 <View style={styles.linhaVertical} />
-                <Text>{pedido.corte} </Text>
+                <Text>
+                  Corte:{' '}
+                  <Text style={{ fontWeight: 'bold' }}> {pedido.corte}</Text>{' '}
+                </Text>
               </View>
             )}
 
@@ -80,21 +83,32 @@ const DetalhaPedido: React.FC = () => {
               <View style={styles.history}>
                 <View style={styles.bolinha} />
                 <View style={styles.linhaVertical} />
-                <Text>{pedido.silk} </Text>
+                <Text>
+                  Silkador:
+                  <Text style={{ fontWeight: 'bold' }}> {pedido.silk}</Text>
+                </Text>
               </View>
             )}
             {!!pedido.bordado && (
               <View style={styles.history}>
                 <View style={styles.bolinha} />
                 <View style={styles.linhaVertical} />
-                <Text> {pedido.bordado} </Text>
+                <Text>
+                  Bordado:
+                  <Text style={{ fontWeight: 'bold' }}> {pedido.bordado}</Text>
+                </Text>
               </View>
             )}
             {!!pedido.sublimacao && (
               <View style={styles.history}>
                 <View style={styles.bolinha} />
                 <View style={styles.linhaVertical} />
-                <Text> {pedido.sublimacao} </Text>
+                <Text>
+                  Sublimador:
+                  <Text style={{ fontWeight: 'bold' }}>
+                    {pedido.sublimacao}
+                  </Text>
+                </Text>
               </View>
             )}
 
@@ -102,13 +116,19 @@ const DetalhaPedido: React.FC = () => {
               <View style={styles.history}>
                 <View style={styles.bolinha} />
                 <View style={styles.linhaVertical} />
-                <Text> {pedido.costura} </Text>
+                <Text>
+                  Costura:
+                  <Text style={{ fontWeight: 'bold' }}> {pedido.costura}</Text>
+                </Text>
               </View>
             )}
             <View style={styles.history}>
               <View style={styles.bolinha} />
               {/* <View style={styles.linhaVertical} /> */}
-              <Text style={styles.textoSecundario}>{pedido.dt_finalizado}</Text>
+              <Text style={styles.textoSecundario}>
+                {pedido.dt_finalizado}
+              </Text>{' '}
+              (verdade )
             </View>
           </View>
         </View>

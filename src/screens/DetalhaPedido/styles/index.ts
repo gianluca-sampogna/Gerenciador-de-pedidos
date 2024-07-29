@@ -108,6 +108,8 @@ const styles = StyleSheet.create({
     width: 15,
     backgroundColor: CORES.azul,
     borderRadius: 40,
+    borderColor: '1px',
+    borderWidth: 1,
     // borderWidth: 1,
   },
   historico: {
@@ -122,16 +124,19 @@ const styles = StyleSheet.create({
   history: {
     flexDirection: 'row',
     width: '100%',
-    height: 60,
+    height: 78,
     alignItems: 'center',
     marginLeft: 15,
     marginTop: -5,
     gap: 5,
+    // borderBottomWidth: 1,
+    // borderTopWidth: 1,
+    // marginRight: 50,
     // position: 'absolute'
   },
   linhaVertical: {
     backgroundColor: CORES.azul,
-    height: 50,
+    height: 80,
     width: 6,
     position: 'absolute',
     top: 30,
